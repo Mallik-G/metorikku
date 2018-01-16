@@ -5,21 +5,13 @@
       "dataFrameName": "moviesWithRatings"
     },
     {
-      "sql": "SELECT movieId,cast(rating as float) as rating,timestamp,title,genres from moviesWithRatings where genres like '%Fantasy%'",
-      "dataFrameName": "fantasyMoviesWithRatings"
-    },
-    {
-      "sql": "SELECT movieId,title,avg(rating) as averageRating from fantasyMoviesWithRatings group by movieId,title order by averageRating desc limit 100",
-      "dataFrameName": "topFantasyMovies"
-    },
-    {
-      "sql": "SELECT * from topFantasyMovies where title = ${myFavoriteMovie}",
-      "dataFrameName": "myFavoriteMovieRated"
+      "sql": "SELECT topic,count(*) as count FROM inputStream group by topic",
+      "dataFrameName": "inputStream"
     }
   ],
   "output": [
     {
-      "dataFrameName": "moviesWithRatings",
+      "dataFrameName": "inputStream",
       "outputType": "Parquet",
       "outputOptions": {
         "saveMode": "Overwrite",
