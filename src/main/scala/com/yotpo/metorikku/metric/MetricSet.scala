@@ -81,24 +81,15 @@ class MetricSet(metricSet: String) {
 
       log.info(s"Starting to Write results of ${dataFrameName}")
       try {
-        if (dataFrame.isStreaming) {
-          val query = dataFrame.writeStream
-            .outputMode("complete")
-            .format("console")
-            .start()
-          query.awaitTermination()
-        }
-        else {
-          output.writer.write(dataFrame)
-        }
-      }
-      catch {
+
+        output.writer.write(dataFrame)
+      } catch {
         case ex: Exception => {
-          throw MetorikkuWriteFailedException(s"Failed to write dataFrame: ${dataFrameName} to output: ${output.outputType} on metric: ${metric.name}", ex)
+          throw MetorikkuWriteFailedException(s"Failed to write dataFrame: " +
+            s"$dataFrameName to output: ${output.outputType} on metric: ${metric.name}", ex)
         }
       }
-    }
-    )
+    })
 
   }
 
