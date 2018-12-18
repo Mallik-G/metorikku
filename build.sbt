@@ -17,18 +17,20 @@ developers := List(
 
 scalaVersion := "2.11.11"
 val jacksonVersion = "2.8.9"
-val sparkVersion = "2.2.0"
+val sparkVersion = "2.3.2"
 
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % sparkVersion % "provided",
   "org.apache.spark" %% "spark-sql" % sparkVersion % "provided",
   "org.apache.spark" %% "spark-mllib" % sparkVersion % "provided",
   "org.apache.spark" %% "spark-sql-kafka-0-10" % sparkVersion % "provided",
+  "org.apache.spark" %% "spark-streaming" % sparkVersion % "provided",
   "com.holdenkarau" %% "spark-testing-base" % "2.2.0_0.7.4" % "test",
   "com.github.scopt" %% "scopt" % "3.6.0",
   "RedisLabs" % "spark-redis" % "0.3.2",
   "org.json4s" %% "json4s-native" % "3.5.2",
-  "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.3",
+  "io.netty" % "netty-all" % "4.1.32.Final",
+  "com.datastax.spark" %% "spark-cassandra-connector" % "2.3.2",
   "com.google.guava" % "guava" % "16.0.1",
   "com.typesafe.play" %% "play-json" % "2.6.2",
   "com.databricks" %% "spark-redshift" % "3.0.0-preview1",
@@ -41,7 +43,8 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion,
   "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
   "com.fasterxml.jackson.dataformat" % "jackson-dataformat-yaml" % jacksonVersion,
-  "com.groupon.dse" % "spark-metrics" % "2.0.0"
+  "com.groupon.dse" % "spark-metrics" % "2.0.0",
+  "org.apache.commons" % "commons-text" % "1.6"
 )
 
 // Temporary fix for https://github.com/databricks/spark-redshift/issues/315#issuecomment-285294306
@@ -54,7 +57,6 @@ resolvers ++= Seq(
 )
 
 fork := true
-//TODO(etrabelsi@yotpo.com) doesnt work
 javaOptions in Test ++= Seq("-Dspark.master=local[*]")
 
 // Assembly settings
